@@ -102,3 +102,6 @@ func searchByDistricts(Houses []house, neededDistricts []string) []house {
 		}
 	})
 }
+
+func main() {
+}
