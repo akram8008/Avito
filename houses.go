@@ -45,9 +45,14 @@ func sortByDistrictDesc (Houses []house)[]house{
 	})
 }
 
-func searchBy (insertNeededPart func(result *[]house))[]house {
+func searchBy (Houses []house,insertNeededPart func(home house) bool)[]house {
 	result := make([]house, 0)
-	insertNeededPart(&result)
+	for _,home:=range Houses {
+		if insertNeededPart(home) {
+			result = append(result, home)
+		}
+	}
+
 	if len(result) == 0 {
 		return make([]house,0)
 	}
@@ -56,52 +61,37 @@ func searchBy (insertNeededPart func(result *[]house))[]house {
 
 
 func searchByMaxPrice (Houses []house, limit int64)[]house{
-	return searchBy(func(result *[]house){
-		for _,val:=range Houses {
-			if val.price < limit {
-				*result = append(*result,val)
-			}
-		}
+	return searchBy(Houses,func(home house) bool{
+		           return home.price <= limit
 	})
 }
+
+
 
 func searchByIntervalPrice (Houses []house, lowerLimit,upperLimit int64)[]house{
-	 return searchBy(func(result *[]house){
-	 	  for _,val:=range Houses{
-	 	  	if val.price < lowerLimit {
-	 	  		continue
-			}
-			if val.price < upperLimit {
-				*result=append(*result,val)
-			}
-		  }
-	 })
-}
-
-
-func searchByDistrict(Houses []house, neededDistrict string) []house {
-	return searchBy(func(result *[]house){
-		for _,val:=range Houses {
-			if val.district == neededDistrict {
-				*result = append(*result,val)
-			}
-		}
+	return searchBy(Houses,func(home house) bool{
+		return  lowerLimit<= home.price && home.price <= upperLimit
 	})
 }
 
 
-func searchByDistricts(Houses []house, neededDistricts []string) []house {
-	return searchBy(func(result *[]house){
-		for _,val:=range Houses {
-			for _,district:=range neededDistricts{
-				if val.district == district {
-					*result = append(*result,val)
-					break
+func searchByDistrict(Houses []house, neededDistrict string) []house{
+	return searchBy(Houses,func(home house) bool{
+		return  home.district == neededDistrict
+	})
+}
+
+func searchByDistricts(Houses []house, neededDistricts []string) []house{
+	return searchBy(Houses,func(home house) bool{
+			for _,val :=range neededDistricts {
+				if home.district == val{
+					return true
 				}
 			}
-		}
+			return false
 	})
 }
+
 
 func main() {
 }
