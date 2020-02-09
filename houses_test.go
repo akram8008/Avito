@@ -70,7 +70,7 @@ func ExampleSortByDistanceFromCenterDesc() {
 
 func ExampleSearchByMaxPrice_ManyResults() {
 	fmt.Println(searchByMaxPrice(houses, 100_000))
-	// Output:[{1 Sino 45 70000 10} {3 Rudaki 64 95000 1} {4 Shohmansur 74 10000 60}]
+	// Output:[{1 Sino 45 70000 10} {3 Rudaki 64 95000 1} {4 Shohmansur 74 10000 60} {4 Shohmansur 74 100000 6}]
 }
 
 func ExampleSearchByMaxPrice_NoResults() {
